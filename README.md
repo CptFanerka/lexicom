@@ -41,7 +41,7 @@ git clone https://github.com/cptfanerka/lexicom.git
 cd lexicom
 pip install -r requirements.txt
 cd src
-uvicorn main:app --host 0.0.0.0 --port 8000
+uvicorn main:app --host localhost --port 8000
 ```
 # Задача 2
 Дано две таблицы в СУБД Postgres.  
