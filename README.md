@@ -41,7 +41,7 @@ git clone https://github.com/cptfanerka/lexicom.git
 cd lexicom
 pip install -r requirements.txt
 cd src
-uvicorn main:app --host 0.0.0.0 --port 8000
+uvicorn main:app --host localhost --port 8000
 ```
 # Задача 2
 Дано две таблицы в СУБД Postgres.  
@@ -49,12 +49,5 @@ uvicorn main:app --host 0.0.0.0 --port 8000
 В одной таблице хранятся имена файлов без расширения. В другой хранятся имена файлов с расширением. Одинаковых названий с разными расширениями быть не может, количество расширений не определено, помимо wav и mp3 может встретиться что угодно.  
 
 Нам необходимо минимальным количеством запросов к СУБД перенести данные о статусе из таблицы short_names в таблицу full_names. Необходимо понимать, что на выполнение запросов / время работы скрипта нельзя тратить больше 10 минут.
-## Установка и запуск
-**Python**
-```
-git clone https://github.com/cptfanerka/lexicom.git
-cd lexicom
-pip install -r requirements.txt
-cd src
-python sql_queries.py
-```
+## Запуск
+Скопировать содержимое файла **sql_queries.txt** из папки lexicom, вставить в терминал **psql** и запустить
