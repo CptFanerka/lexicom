@@ -1,0 +1,37 @@
+DROP DATABASE IF EXISTS lexicom_database;
+CREATE DATABASE lexicom_database;
+\c lexicom_database;
+DROP TABLE IF EXISTS short_names;
+DROP TABLE IF EXISTS full_names;
+\timing
+CREATE TABLE IF NOT EXISTS short_names (
+    name TEXT,
+    status INTEGER
+);
+CREATE TABLE IF NOT EXISTS full_names (
+    name TEXT,
+    status INTEGER
+);
+INSERT INTO short_names (name, status)
+SELECT 'nazvanie' || generate_series(1, 700000), CASE WHEN random() <= 0.5 THEN 0 ELSE 1 END;
+SELECT * FROM short_names LIMIT 5;
+SELECT COUNT(*) FROM short_names;
+INSERT INTO full_names (name, status)
+SELECT 'nazvanie' || generate_series(1, 100000) || '.' || 'mp3', NULL;
+INSERT INTO full_names (name, status)
+SELECT 'nazvanie' || generate_series(100001, 200000) || '.' || 'wav', NULL;
+INSERT INTO full_names (name, status)
+SELECT 'nazvanie' || generate_series(200001, 300000) || '.' || 'mkv', NULL;
+INSERT INTO full_names (name, status)
+SELECT 'nazvanie' || generate_series(300001, 400000) || '.' || 'avi', NULL;
+INSERT INTO full_names (name, status)
+SELECT 'nazvanie' || generate_series(400001, 500000) || '.' || 'mov', NULL;
+SELECT * FROM full_names LIMIT 5;
+SELECT COUNT(*) FROM full_names;
+CREATE INDEX IF NOT EXISTS short_names_name_index ON short_names (name);
+CREATE INDEX IF NOT EXISTS full_names_name_index ON full_names (name);
+UPDATE full_names
+SET status = short_names.status
+FROM short_names
+WHERE split_part(full_names.name, '.', 1) = short_names.name;
+SELECT * FROM full_names ORDER BY status LIMIT 10;
